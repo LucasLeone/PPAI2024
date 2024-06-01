@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Vino {
     private String añada;
-    private Date fechaActualizacion;
+    private String fechaActualizacion;
     private String imagenEtiqueta;
     private String nombre;
     private String notaDeCataBodega;
@@ -12,6 +12,15 @@ public class Vino {
     private ArrayList<Maridaje> maridaje;
     private Bodega bodega;
 
+    public Vino(String añada, String fechaActualizacion, String imagenEtiqueta, String nombre, Integer precioARS, Bodega bodega, ArrayList<Varietal> varietalsForVino1) {
+        this.añada = añada;
+        this.fechaActualizacion = fechaActualizacion;
+        this.imagenEtiqueta = imagenEtiqueta;
+        this.nombre = nombre;
+        this.precioARS = precioARS;
+        this.bodega = bodega;
+    }
+    
     public String getAñada() {
         return this.añada;
     }
@@ -20,11 +29,11 @@ public class Vino {
         this.añada = añada;
     }
 
-    public Date getFechaActualizacion() {
+    public String getFechaActualizacion() {
         return this.fechaActualizacion;
     }
 
-    public void setFechaActualizacion(Date fechaActualizacion) {
+    public void setFechaActualizacion(String fechaActualizacion) {
         this.fechaActualizacion = fechaActualizacion;
     }
 
@@ -82,5 +91,10 @@ public class Vino {
 
     public void setBodega(Bodega bodega) {
         this.bodega = bodega;
+    }
+
+    @Override
+    public String toString() {
+        return "Vino: " + nombre + " (añada: " + añada + ", fecha de actualizacion: " + fechaActualizacion + ", nota de cata: " + notaDeCataBodega + ", precio: $" + precioARS + ", bodega: " + bodega.getNombre() + ")";
     }
 }

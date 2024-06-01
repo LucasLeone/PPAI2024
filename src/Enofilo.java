@@ -1,15 +1,7 @@
-import java.util.ArrayList;
-
 public class Enofilo {
     private String nombre;
-    private ArrayList<Siguiendo> siguiendo;
 
-    public ArrayList<Siguiendo> getSiguiendo() {
-        return this.siguiendo;
-    }
-
-    public void setSiguiendo(ArrayList<Siguiendo> siguiendo) {
-        this.siguiendo = siguiendo;
+    public Enofilo(String nombre) {
     }
 
     public String getNombre() {

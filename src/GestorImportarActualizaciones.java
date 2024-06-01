@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class GestorImportarActualizaciones {
     private ArrayList<Bodega> bodegas = new ArrayList<>();
@@ -9,24 +10,40 @@ public class GestorImportarActualizaciones {
     private Bodega infoBodegaSeleccionada;
     private ArrayList<TipoUva> tiposUva;
     private ArrayList<Vino> vinos;
+    private DB db;
+    private PantallaImportarActualizaciones pantallaImportarActualizaciones;
+    private SistemaDeBodega sistemaDeBodega;
 
-    public void importarActualizacionVinos() {
-        this.buscarBodegasConActualizacionDisponible(this.getFechaActual());
+    public GestorImportarActualizaciones(DB db, SistemaDeBodega sistemaDeBodega) {
+        this.db = db;
+        this.sistemaDeBodega = sistemaDeBodega;
     }
 
-    public void buscarBodegasConActualizacionDisponible(Date fechaActual) {
+    public void importarActualizacionVinos() {
+        buscarBodegasConActualizacionDisponible();
+        pantallaImportarActualizaciones = new PantallaImportarActualizaciones(this, bodegas);
+        pantallaImportarActualizaciones.setVisible(true);
+    }
+
+    public void buscarBodegasConActualizacionDisponible() {
         ArrayList<Bodega> bodegasConActualizacion = new ArrayList<>();
 
-        for (Bodega bodega : bodegas) {
-            if (bodega.tieneActualizacionDisponible(fechaActual)) {
+        for (Bodega bodega : db.dbBodega) {
+            if (bodega.tieneActualizacionDisponible()) {
                 bodegasConActualizacion.add(bodega);
                 System.out.println("Bodega " + bodega.getNombre() + " tiene una actualización disponible.");
             }
         }
 
-        this.setBodegas(bodegasConActualizacion);
+        this.bodegas = bodegasConActualizacion;
     }
 
+    public void buscarActualizacionesBodegaSeleccionada(Bodega bodega) {
+        this.bodegaSeleccionada = bodega;
+        ArrayList<String> vinosInfo = sistemaDeBodega.actualizarYCrearVinos(bodega);
+        pantallaImportarActualizaciones.mostrarInformacionVinos(bodega.getNombre(), vinosInfo);
+    }
+    
     // Métodos get y set del gestor
     public ArrayList<Bodega> getBodegas() {
         return this.bodegas;
@@ -82,5 +99,21 @@ public class GestorImportarActualizaciones {
 
     public void setVinos(ArrayList<Vino> vinos) {
         this.vinos = vinos;
+    }
+
+    public DB getDb() {
+        return db;
+    }
+
+    public void setDb(DB db) {
+        this.db = db;
+    }
+
+    public PantallaImportarActualizaciones getPantallaImportarActualizaciones() {
+        return pantallaImportarActualizaciones;
+    }
+
+    public void setPantallaImportarActualizaciones(PantallaImportarActualizaciones pantallaImportarActualizaciones) {
+        this.pantallaImportarActualizaciones = pantallaImportarActualizaciones;
     }
 }

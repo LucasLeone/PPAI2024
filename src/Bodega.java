@@ -10,20 +10,12 @@ public class Bodega {
         this.periodoActualizacion = periodoActualizacion;
     }
 
-    public Boolean tieneActualizacionDisponible(Date fechaActual) {
-        Calendar calFechaActual = Calendar.getInstance();
-        calFechaActual.setTime(fechaActual);
-
-        // Suponemos que la bodega se actualizó la última vez hace 'periodoActualizacion' meses
-        Calendar calUltimaActualizacion = Calendar.getInstance();
-        calUltimaActualizacion.setTime(fechaActual);
-        calUltimaActualizacion.add(Calendar.MONTH, -this.periodoActualizacion);
-
-        // Comparamos las fechas
-        int diffYear = calFechaActual.get(Calendar.YEAR) - calUltimaActualizacion.get(Calendar.YEAR);
-        int diffMonth = diffYear * 12 + calFechaActual.get(Calendar.MONTH) - calUltimaActualizacion.get(Calendar.MONTH);
-
-        return diffMonth >= this.periodoActualizacion;
+    public Boolean tieneActualizacionDisponible() {
+        if (this.periodoActualizacion == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // Métodos get y set
