@@ -1,7 +1,8 @@
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Vino {
+	private Integer idVino;
     private String añada;
     private String fechaActualizacion;
     private String imagenEtiqueta;
@@ -12,20 +13,30 @@ public class Vino {
     private ArrayList<Maridaje> maridaje;
     private Bodega bodega;
 
-    public Vino(String añada, String fechaActualizacion, String imagenEtiqueta, String nombre, Integer precioARS, Bodega bodega, ArrayList<Varietal> varietalsForVino1) {
-        this.añada = añada;
+    public Vino(Integer idVino, String añada, String fechaActualizacion, String imagenEtiqueta, String nombre, Integer precioARS, Bodega bodega, ArrayList<Varietal> varietales) {
+        this.idVino = idVino;
+    	this.añada = añada;
         this.fechaActualizacion = fechaActualizacion;
         this.imagenEtiqueta = imagenEtiqueta;
         this.nombre = nombre;
         this.precioARS = precioARS;
         this.bodega = bodega;
+        this.varietal = varietales;
     }
     
     public String getAñada() {
         return this.añada;
     }
 
-    public void setAñada(String añada) {
+    public Integer getIdVino() {
+		return idVino;
+	}
+
+	public void setIdVino(Integer idVino) {
+		this.idVino = idVino;
+	}
+
+	public void setAñada(String añada) {
         this.añada = añada;
     }
 
@@ -73,10 +84,6 @@ public class Vino {
         return this.varietal;
     }
 
-    public void setVarietal(ArrayList<Varietal> varietal) {
-        this.varietal = varietal;
-    }
-
     public ArrayList<Maridaje> getMaridaje() {
         return this.maridaje;
     }
@@ -92,7 +99,33 @@ public class Vino {
     public void setBodega(Bodega bodega) {
         this.bodega = bodega;
     }
+    
+    public void setVarietal(ArrayList<Varietal> varietalesActualizar) {
+		ArrayList<Varietal> varietales = new ArrayList<>();
+		for (Varietal varietal : varietalesActualizar) {
+	        Collections.addAll(varietales, varietal);
+	        varietal.setTipoUva(varietal.getTipoUva());
+		}
+		this.varietal = varietales;
+    }
 
+    public void actualizarVino(Vino vino, Vino vinoParaActualizar) {
+    	vinoParaActualizar.setAñada(vino.getAñada());
+    	vinoParaActualizar.setFechaActualizacion(vino.getFechaActualizacion());
+    	vinoParaActualizar.setImagenEtiqueta(vino.getImagenEtiqueta());
+    	vinoParaActualizar.setNombre(vino.getNombre());
+    	vinoParaActualizar.setNotaDeCataBodega(vino.getNotaDeCataBodega());
+    	vinoParaActualizar.setPrecioARS(vino.getPrecioARS());
+    	vinoParaActualizar.setMaridaje(vino.getMaridaje());
+		vinoParaActualizar.setVarietal(vino.getVarietal());
+    }
+    
+    public void crearVarietal(TipoUva uva) {
+    	Varietal varietalNuevo = new Varietal();
+    	varietalNuevo.setTipoUva(uva);
+    	this.setVarietal(varietal);
+    }
+    
     @Override
     public String toString() {
         return " - Añada: " + añada + ", fecha de actualizacion: " + fechaActualizacion + ", precio: $" + precioARS + ", bodega: " + bodega.getNombre() + ")";

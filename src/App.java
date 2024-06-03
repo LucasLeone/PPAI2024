@@ -5,7 +5,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         // CASO DE USO ANTERIOR, nos brinda estos datos: :)
         GestorImportarActualizaciones gestor = new GestorImportarActualizaciones(db);
-        gestor.importarActualizacionVinos();
+        gestor.crearPantalla();
     }
 }
 /*

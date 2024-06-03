@@ -29,14 +29,17 @@ public class DB {
         // varietal
         this.dbVarietal = new ArrayList<Varietal>();
         Varietal varietal1 = new Varietal(tipoUva1);
-        Varietal varietal2 = new Varietal(tipoUva1);
+        
+        Varietal varietal2 = new Varietal(tipoUva2);
+        
         Varietal varietal3 = new Varietal(tipoUva3);
+        
         Varietal varietal4 = new Varietal(tipoUva4);
-        Collections.addAll(dbVarietal, varietal1, varietal2, varietal3, varietal4);
+        
         
         // Listas de varietales para cada vino
         ArrayList<Varietal> varietalsForVino1 = new ArrayList<>();
-        Collections.addAll(varietalsForVino1, varietal1, varietal2);
+        Collections.addAll(varietalsForVino1, varietal1, varietal2, varietal4);
 
         ArrayList<Varietal> varietalsForVino2 = new ArrayList<>();
         Collections.addAll(varietalsForVino2, varietal2);
@@ -49,10 +52,10 @@ public class DB {
         
         // vinos
         this.dbVino = new ArrayList<Vino>();
-        Vino vino1 = new Vino("2017", "10/03/2024", "imagen1", "Toro", 11200, bodega3, varietalsForVino1);
-        Vino vino2 = new Vino("2023", "16/02/2024", "imagen2", "Guepardo", 3200, bodega3, varietalsForVino2);
-        Vino vino3 = new Vino("2020", "05/03/2024", "imagen3", "Piel de cordero", 9800, bodega1, varietalsForVino3);
-        Vino vino4 = new Vino("2022", "13/03/2024", "imagen4", "Berraco", 9900, bodega4, varietalsForVino4);
+        Vino vino1 = new Vino(1, "2017", "10/03/2024", "imagen1", "Toro", 11200, bodega3, varietalsForVino1);
+        Vino vino2 = new Vino(2, "2023", "16/02/2024", "imagen2", "Guepardo", 3200, bodega3, varietalsForVino2);
+        Vino vino3 = new Vino(3, "2020", "05/03/2024", "imagen3", "Piel de cordero", 9800, bodega1, varietalsForVino3);
+        Vino vino4 = new Vino(4, "2022", "13/03/2024", "imagen4", "Berraco", 9900, bodega4, varietalsForVino4);
         Collections.addAll(dbVino, vino1, vino2, vino3, vino4);
 
         // enofilo
@@ -98,5 +101,9 @@ public class DB {
 
 	public ArrayList<Enofilo> getDbEnofilo() {
 		return dbEnofilo;
+	}
+
+	public ArrayList<Vino> getDbVino() {
+		return dbVino;
 	}
 }

@@ -5,7 +5,10 @@ public class Varietal {
         this.tipoUva = tipoUva;
     }
 
-    public TipoUva getTipoUva() {
+    public Varietal() {
+	}
+
+	public TipoUva getTipoUva() {
         return this.tipoUva;
     }
 

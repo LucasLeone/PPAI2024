@@ -37,11 +37,10 @@ public class InterfazBodega {
         Collections.addAll(varietalesVino3, varietal3, varietal4);
         
         // Vinos a crear
-        Vino vino1 = new Vino("2020", "03/06/2024", "imagen1", "Tilin", 11200, bodega, varietalesVino1);
-        Vino vino2 = new Vino("2022", "03/06/2024", "imagen2", "Valentin", 3200, bodega, varietalesVino2);
-        
+        Vino vino1 = new Vino(5, "2020", "03/06/2024", "imagen1", "Tilin", 11200, bodega, varietalesVino1);
+        Vino vino2 = new Vino(6, "2022", "03/06/2024", "imagen2", "Valentin", 3200, bodega, varietalesVino2);
         // Vino a actualizar
-        Vino vino3 = new Vino("2024", "03/06/2024", "imagen3", "Piel de cordero", 12000, bodega, varietalesVino3);
+        Vino vino3 = new Vino(3, "2024", "03/06/2024", "imagen3", "Piel de cordero", 12000, bodega, varietalesVino3);
         
 		this.vinos.add(vino1);
 		this.vinos.add(vino2);
