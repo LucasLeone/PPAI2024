@@ -16,7 +16,7 @@ public class GestorImportarActualizaciones {
         this.db = db;
     }
     
-    public void crearPantalla() {
+    public void habilitarPantalla() {
     	this.pantallaImportarActualizaciones = new PantallaImportarActualizaciones(this);
         pantallaImportarActualizaciones.setVisible(true);
     }
@@ -24,10 +24,10 @@ public class GestorImportarActualizaciones {
     public void importarActualizacionVinos() {
     	// PASO 1
     	this.fechaActual = getFechaActual();
-    	this.buscarBodegasConActualizacionDisponible();
+    	this.buscarBodegasConActualizacionDisponible(fechaActual);
     }
 
-    public void buscarBodegasConActualizacionDisponible() {
+    public void buscarBodegasConActualizacionDisponible(String fechaActual) {
     	// PASO 2
         ArrayList<Bodega> bodegasConActualizacion = new ArrayList<>();
 
@@ -47,7 +47,7 @@ public class GestorImportarActualizaciones {
     public void tomarSeleccionBodega(Bodega bodega) {
     	// PASO 4
     	this.setBodegaSeleccionada(bodega);
-    	this.buscarActualizacionesBodegaSeleccionada(bodega);
+    	this.buscarActualizacionesBodegaSeleccionada(this.getBodegaSeleccionada());
     }
     
     public void buscarActualizacionesBodegaSeleccionada(Bodega bodega) {
@@ -60,6 +60,7 @@ public class GestorImportarActualizaciones {
     	this.pantallaImportarActualizaciones.mostrarVinosCreadosOActualizados(vinos);
     	// PASO 7
     	this.enviarNotificacionEnofilosConNovedades();
+    	this.actualizarPeriodoActualizacionBodega();
     }
     
     public void actualizarVinosBodega(ArrayList<Vino> vinosInterfaz) {
@@ -81,10 +82,25 @@ public class GestorImportarActualizaciones {
     }
     
     public void crearVinoNoExistenteEnLaBodega(ArrayList<Vino> vinosInterfaz) {
-    	for (Vino vino : vinosInterfaz) {
-    		this.db.agregarVino(vino);
-    		vino.crearVarietal(this.tiposUva.get(0));
-    	}
+        ArrayList<Vino> nuevosVinos = new ArrayList<>();
+        
+        for (Vino vino : vinosInterfaz) {
+            boolean existe = false;
+            for (Vino vinoDB : db.getDbVino()) {
+                if (vinoDB.getIdVino().equals(vino.getIdVino())) {
+                    existe = true;
+                    break;
+                }
+            }
+            if (!existe) {
+                Vino nuevoVino = new Vino(vino, this.getTiposUva().get(0));
+                nuevosVinos.add(nuevoVino);
+            }
+        }
+        
+        for (Vino nuevoVino : nuevosVinos) {
+            db.agregarVino(nuevoVino);
+        }
     }
     
     public void enviarNotificacionEnofilosConNovedades() {
@@ -99,7 +115,6 @@ public class GestorImportarActualizaciones {
     
     public void notificarEnofilos(ArrayList<Enofilo> enofilos) {
     	this.interfazPush.enviarNotificacionPush();
-    	this.actualizarPeriodoActualizacionBodega();
     }
     
     public void actualizarPeriodoActualizacionBodega() {

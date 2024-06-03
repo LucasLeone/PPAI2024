@@ -24,7 +24,19 @@ public class Vino {
         this.varietal = varietales;
     }
     
-    public String getAñada() {
+    public Vino(Vino vino, TipoUva uva) {
+		this.idVino = vino.getIdVino();
+		this.añada = vino.getAñada();
+		this.fechaActualizacion = vino.getFechaActualizacion();
+		this.imagenEtiqueta = vino.getFechaActualizacion();
+		this.nombre = vino.getNombre();
+		this.precioARS = vino.getPrecioARS();
+		this.bodega = vino.getBodega();
+		Varietal varietal = new Varietal();
+		varietal.setTipoUva(uva);
+	}
+
+	public String getAñada() {
         return this.añada;
     }
 

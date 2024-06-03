@@ -1,6 +1,3 @@
-import java.util.Date;
-import java.util.Calendar;
-
 public class Bodega {
     private String nombre;
     private Integer periodoActualizacion;  // Periodicidad en meses

@@ -12,9 +12,9 @@ public class DB {
     public DB() {
         // bodegas
         this.dbBodega = new ArrayList<Bodega>();
-        Bodega bodega1 = new Bodega("Las Lilas", 2);
-        Bodega bodega2 = new Bodega("La negrita", 6);
-        Bodega bodega3 = new Bodega("El perro", 0);
+        Bodega bodega1 = new Bodega("Las Lilas", 0);
+        Bodega bodega2 = new Bodega("La negrita", 3);
+        Bodega bodega3 = new Bodega("El perro", 9);
         Bodega bodega4 = new Bodega("El sur", 0);
         Collections.addAll(dbBodega, bodega1, bodega2, bodega3, bodega4);
 
@@ -29,13 +29,9 @@ public class DB {
         // varietal
         this.dbVarietal = new ArrayList<Varietal>();
         Varietal varietal1 = new Varietal(tipoUva1);
-        
         Varietal varietal2 = new Varietal(tipoUva2);
-        
         Varietal varietal3 = new Varietal(tipoUva3);
-        
         Varietal varietal4 = new Varietal(tipoUva4);
-        
         
         // Listas de varietales para cada vino
         ArrayList<Varietal> varietalsForVino1 = new ArrayList<>();
@@ -92,7 +88,7 @@ public class DB {
 	}
 
 	public void agregarVino(Vino nuevoVino) {
-        dbVino.add(nuevoVino);
+        dbVino.add(nuevoVino);;
     }
 
 	public ArrayList<TipoUva> getDbTipoUva() {
