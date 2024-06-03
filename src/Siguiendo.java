@@ -22,4 +22,12 @@ public class Siguiendo {
     public void setBodega(Bodega bodega) {
         this.bodega = bodega;
     }
+    
+    public Boolean sigueABodega(Bodega bodega) {
+    	if (this.getBodega() == bodega) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
 }

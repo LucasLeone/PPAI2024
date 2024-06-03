@@ -95,6 +95,14 @@ public class Vino {
 
     @Override
     public String toString() {
-        return "Vino: " + nombre + " (añada: " + añada + ", fecha de actualizacion: " + fechaActualizacion + ", nota de cata: " + notaDeCataBodega + ", precio: $" + precioARS + ", bodega: " + bodega.getNombre() + ")";
+        return " - Añada: " + añada + ", fecha de actualizacion: " + fechaActualizacion + ", precio: $" + precioARS + ", bodega: " + bodega.getNombre() + ")";
     }
+
+	public boolean perteneceABodegaSeleccionada(Bodega bodegaSeleccionada) {
+		if (this.getBodega() == bodegaSeleccionada) {
+			return true;
+		} else {			
+			return false;
+		}
+	}
 }

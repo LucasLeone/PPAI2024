@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PantallaImportarActualizaciones extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -12,9 +11,9 @@ public class PantallaImportarActualizaciones extends JFrame {
     private JPanel contentPane;
     private JButton showOptionsButton;
     private JTextPane textPane;
-    private JComboBox<String> comboBoxBodegas;
+    private JPanel panelIzquierdo;
 
-    public PantallaImportarActualizaciones(GestorImportarActualizaciones gestor, ArrayList<Bodega> bodegas) {
+    public PantallaImportarActualizaciones(GestorImportarActualizaciones gestor) {
         this.gestor = gestor;
 
         setTitle("Registrar Respuesta de Operador");
@@ -26,7 +25,7 @@ public class PantallaImportarActualizaciones extends JFrame {
         contentPane.setLayout(new BorderLayout(0, 0));
         setContentPane(contentPane);
 
-        JPanel panelIzquierdo = new JPanel();
+        panelIzquierdo = new JPanel();
         panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
         contentPane.add(panelIzquierdo, BorderLayout.WEST);
 
@@ -37,61 +36,43 @@ public class PantallaImportarActualizaciones extends JFrame {
         showOptionsButton = new JButton("Importar actualización de vinos");
         showOptionsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mostrarBodegasConActualizacionDisponible(bodegas, panelIzquierdo);
+                gestor.buscarBodegasConActualizacionDisponible();
             }
         });
+
         contentPane.add(showOptionsButton, BorderLayout.NORTH);
     }
 
-    public void mostrarBodegasConActualizacionDisponible(ArrayList<Bodega> bodegas, JPanel panelIzquierdo) {
-        panelIzquierdo.removeAll(); // Limpiar cualquier opción previa
+    public void mostrarBodegasConActualizacionDisponible(ArrayList<Bodega> bodegas) {
+        panelIzquierdo.removeAll(); // Elimina todos los componentes anteriores
 
-        comboBoxBodegas = new JComboBox<>();
         for (Bodega bodega : bodegas) {
-            comboBoxBodegas.addItem(bodega.getNombre());
+            JButton button = new JButton(bodega.getNombre());
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    textPane.setText("Buscando actualizaciones para la bodega seleccionada: " + bodega.getNombre());
+                    tomarSeleccionBodega(bodega);
+                }
+            });
+            panelIzquierdo.add(button);
         }
 
-        comboBoxBodegas.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int selectedIndex = comboBoxBodegas.getSelectedIndex();
-                if (selectedIndex != -1) {
-                    Bodega selectedBodega = bodegas.get(selectedIndex);
-                    textPane.setText("Buscando actualizaciones para la bodega seleccionada: " + selectedBodega.getNombre());
-                    gestor.buscarActualizacionesBodegaSeleccionada(selectedBodega);
-                }
-            }
-        });
-
-        panelIzquierdo.add(comboBoxBodegas);
         panelIzquierdo.revalidate();
         panelIzquierdo.repaint();
     }
-
-    public void mostrarInformacionVinos(String bodegaNombre, List<String> vinosActualizados) {
-        StringBuilder info = new StringBuilder();
-        info.append("Se encontró una actualización en la bodega seleccionada: ").append(bodegaNombre).append("\n\n");
-        info.append("Vinos creados/actualizados:\n");
-
-        for (String vinoInfo : vinosActualizados) {
-            info.append(vinoInfo).append("\n");
-        }
-
-        textPane.setText(info.toString());
+    
+    public void tomarSeleccionBodega(Bodega bodega) {
+        gestor.tomarSeleccionBodega(bodega);
     }
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    DB db = new DB();
-                    DBAPI dbAPI = new DBAPI();
-                    SistemaDeBodega sistemaDeBodega = new SistemaDeBodegaImpl(dbAPI);
-                    GestorImportarActualizaciones gestor = new GestorImportarActualizaciones(db, sistemaDeBodega);
-                    gestor.importarActualizacionVinos();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+    public void mostrarVinosCreadosOActualizados(ArrayList<Vino> vinos) {
+        StringBuilder sb = new StringBuilder(textPane.getText());
+        sb.append("\n\nVinos creados/actualizados:\n");
+
+        for (Vino vino : vinos) {
+            sb.append(vino.toString()).append("\n");
+        }
+
+        textPane.setText(sb.toString());
     }
 }

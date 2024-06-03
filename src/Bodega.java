@@ -10,7 +10,7 @@ public class Bodega {
         this.periodoActualizacion = periodoActualizacion;
     }
 
-    public Boolean tieneActualizacionDisponible() {
+    public Boolean tieneActualizacionDisponible(String fechaActual) {
         if (this.periodoActualizacion == 0) {
             return true;
         } else {
@@ -34,4 +34,5 @@ public class Bodega {
     public void setPeriodoActualizacion(Integer periodoActualizacion) {
         this.periodoActualizacion = periodoActualizacion;
     }
+
 }

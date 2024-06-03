@@ -84,7 +84,19 @@ public class DB {
         }
     }
 
-    public void agregarVino(Vino nuevoVino) {
+    public ArrayList<Siguiendo> getDbSiguiendo() {
+		return dbSiguiendo;
+	}
+
+	public void agregarVino(Vino nuevoVino) {
         dbVino.add(nuevoVino);
     }
+
+	public ArrayList<TipoUva> getDbTipoUva() {
+		return dbTipoUva;
+	}
+
+	public ArrayList<Enofilo> getDbEnofilo() {
+		return dbEnofilo;
+	}
 }
